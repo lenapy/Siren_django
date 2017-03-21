@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'siren_app'
+    'siren_proj',
+    'siren_proj.user'
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'siren_proj.middlewares.auth.Auth'
 ]
 
 ROOT_URLCONF = 'siren_proj.urls'
@@ -55,7 +57,9 @@ ROOT_URLCONF = 'siren_proj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,7 +81,7 @@ WSGI_APPLICATION = 'siren_proj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'siren_db',
+        'NAME': 'sirendb',
         'USER': 'siren_admin',
         'PASSWORD': '123',
         'HOST': 'localhost',
@@ -104,6 +108,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+]
+
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
+AUTH_USER_MODEL = 'siren_proj.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -123,6 +133,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'video_images')
+STATIC_ROOT = os.path.join(BASE_DIR, 'siren_proj/static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'siren_proj/video_images')
 MEDIA_URL = '/video_images/'

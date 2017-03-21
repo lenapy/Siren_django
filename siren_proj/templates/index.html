@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if form.errors %}
+        {{ form.errors }}}
+    {% endif %}
+    <link rel="stylesheet" type="text/css" href="../static/base.css">
+{#    {% for video in videos %}#}
+{#        {{ video.name }}#}
+{#    {% endfor %}#}
+
+{% endblock %}
