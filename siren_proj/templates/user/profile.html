@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="../../static/base.css">
+    {% if form.errors %}
+        {{ form.errors }}}
+    {% endif %}
+
+{% endblock %}
