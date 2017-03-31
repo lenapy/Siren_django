@@ -1,4 +1,5 @@
 .idea
-siren_proj/video_images/
+siren_proj/static/video_images/
 migrations/
 svenv/
+__pycache__/

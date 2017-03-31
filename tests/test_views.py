@@ -75,8 +75,7 @@ class TestLogOutUser(TestCase):
 class TestChangePassword(TestCase):
     def test_change_password_form_valid(self):
         user_registration()
-        form = PasswordChangeForm(data={'login': 'test_login',
-                                        'password': 'test_password',
+        form = PasswordChangeForm(data={'password': 'test_password',
                                         'new_password': 'test_new_password',
                                         'reenter_password': 'test_new_password',
                                         })
@@ -85,8 +84,7 @@ class TestChangePassword(TestCase):
 
     def test_change_password_form_new_pass_equal_pass(self):
         user_registration()
-        PasswordChangeForm(data={'login': 'test_login',
-                                 'password': 'test_password',
+        PasswordChangeForm(data={'password': 'test_password',
                                  'new_password': 'test_password',
                                  'reenter_password': 'test_password',
                                  })
@@ -94,18 +92,9 @@ class TestChangePassword(TestCase):
 
     def test_change_password_form_new_pass_not_equal_reenter_pass(self):
         user_registration()
-        PasswordChangeForm(data={'login': 'test_login',
-                                 'password': 'test_password',
+        PasswordChangeForm(data={'password': 'test_password',
                                  'new_password': 'new_password',
                                  'reenter_password': 'some_password',
                                  })
         self.assertRaises(forms.ValidationError)
 
-    def test_change_password_form_user_not_exist(self):
-        user_registration()
-        PasswordChangeForm(data={'login': '__',
-                                 'password': 'test_password',
-                                 'new_password': 'new_password',
-                                 'reenter_password': 'some_password',
-                                 })
-        self.assertRaises(forms.ValidationError)

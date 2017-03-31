@@ -8,14 +8,18 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-{% block content %}
-<link rel="stylesheet" type="text/css" href="../../static/base.css">
-<link rel="stylesheet" href="../../static/video_main.css" type="text/css">
-    {% if form.errors %}
-        {{ form.errors }}}
-    {% endif %}
+{##}
+{#<link rel="stylesheet" type="text/css" href="../../static/video_main.css">#}
+{#<link rel="stylesheet" type="text/css" href="/siren_proj/static/base.css">#}
 
-           <div class="container">
+{% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../static/base.css" type="text/css">
+<link rel="stylesheet" href="../../static/video_main.css" type="text/css">
+
+
+
+    <div class="container">
     {%  for video in videos %}
 {#        {% if video.type == 1 %}#}
       <div class="box">
@@ -35,8 +39,14 @@
                         <h5> Серия {{video.last_episode }}</h5>
                    {% endif %}
                 <div class="form-control">
-                     <a href="{% url 'video:unsubscribe' pk=video.id %}">
+                     <a href="{% url 'video:add' pk=video.id %}">
+                         <button class="btn btn-default">Следить</button></a>
+                    {% for subscription in subscriptions %}
+                        {% if subscription.video_id == video.id and subscription.user_id == request.user.id %}
+                            <a href="{% url 'video:unsubscribe' pk=video.id %}">
                                 <button class="btn btn-default">Перестать</button></a>
+                        {% endif %}
+                    {% endfor %}
                 </div>
           </div>
       </div>
@@ -54,5 +64,4 @@
         </h4>
 
     </div>
-
 {% endblock %}

@@ -31,22 +31,17 @@ class LoginForm(forms.Form):
 
 
 class PasswordChangeForm(forms.Form):
-    login = forms.CharField(max_length=50, initial='')
     password = forms.CharField(min_length=6, initial='')
     new_password = forms.CharField(min_length=6, initial='')
     reenter_password = forms.CharField(min_length=6, initial='')
 
     def clean(self):
         cleaned_data = super().clean()
-        login = cleaned_data['login']
         password = cleaned_data['password']
         new_password = cleaned_data['new_password']
         reenter_password = cleaned_data['reenter_password']
-        self.user = User.objects.filter(login=login).first()
-        if self.user:
-            if not (new_password == reenter_password or new_password != password):
-                raise forms.ValidationError('Incorrect password')
-            else:
-                return new_password
+        if not (new_password == reenter_password or new_password != password):
+            raise forms.ValidationError('Incorrect password')
         else:
-            raise forms.ValidationError("User %s doesn't exist" % login)
+            return cleaned_data
+

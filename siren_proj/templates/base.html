@@ -3,9 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Siren</title>
+
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="../static/base.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/static/base.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 </head>
 <body>
 
@@ -24,20 +32,53 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="active"><a href="{% url 'video:main' %}">Home</a></li>
 
-                        <li><a href="#">Films</a></li>
-                        <li><a href="#">Tv shows</a></li>
+                        <li class=" dropdown"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Фильмы <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class=""><a href="{% url 'user:profile' %}">Русские</a></li>
+                                <li class=""><a href="{% url 'user:change_password' %}">Зарубежные</a>
+                                <li class=" dropdown"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> По году <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li class=""><a href="{% url 'user:profile' %}">2015</a></li>
+                                    <li class=""><a href="{% url 'user:change_password' %}">2016</a></li>
+                                    <li class=""><a href="{% url 'user:logout' %}">2017</a></li>
+                                </ul>
+                                <li class=""><a href="{% url 'user:logout' %}">По жанру</a></li>
+                            </ul>
+                        </li>
+
+                        <li class=" dropdown"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Сериалы <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class=""><a href="{% url 'user:profile' %}">Русские</a></li>
+                                <li class=""><a href="{% url 'user:change_password' %}">Зарубежные</a>
+                                <li class=""><a href="{% url 'user:logout' %}">Турецкие</a></li>
+                            </ul>
+                        </li>
                     </ul>
-
-
+                    <ul class="nav navbar-nav">
+                       <li class="">
+                            <div class="lighter">
+                                    <form class="" method="post" action="{% url 'video:search' %}">
+                                        {% csrf_token %}
+                                            <span><input type="text" class="search rounded" name="video_title"
+                                                         id="video_title" placeholder="Искать..."
+                                                         value="{{ form.video_title.value }}">
+                                            </span>
+{#                                            <a href = "{% url 'video:search' %}">#}
+                                                <button class="button blue_alt" type="submit">OK</button>
+{#                                            </a>#}
+                                    </form>
+                            </div>
+                        </li>
+                    </ul>
                     <ul class="nav navbar-nav pull-right">
                         <li class=" dropdown"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Signed in as {{ user.login }} <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li class=""><a href="{% url 'user:profile' %}">Your Profile</a></li>
                                 <li class=""><a href="{% url 'user:change_password' %}">Change password</a>
                                 <li class=""><a href="{% url 'user:logout' %}">Log out</a></li>
-                            </ul>
+                    </ul>
                             <li class=""><a href="{% url 'user:registration' %}">Registration</a></li>
                             <li class=""><a href="{% url 'user:login' %}">Log in</a></li>
                     </ul>

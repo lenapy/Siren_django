@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/base.css" type="text/css">
+<link rel="stylesheet" href="/static/tv_show.css" type="text/css">
+
+
+<div class="container">
+     {%  for tv_show in tv_shows %}
+  <div class="box">
+
+<div class="video_container">
+              <p>
+                <img src= '{{ tv_show.photo }}' width="300" height="400" alt="{{ tv_show.name }}" />
+              </p>
+                <p>
+                        <h5>{{ tv_show.name }}</h5>
+                   {% if  tv_show.last_episode == 'Все серии' %}
+                       <h5> {{ tv_show.last_episode }}</h5>
+                   {% else %}
+                        <h5> Серия {{tv_show.last_episode }}</h5>
+                   {% endif %}
+                <div class="form-control">
+                     <a href="{% url 'video:add' pk=tv_show.id %}">
+                         <button class="btn btn-default">Следить</button></a>
+                    {% for subscription in subscriptions %}
+                        {% if subscription.user_id == request.user.id and subscription.video_id == tv_show.id %}
+                            <a href="{% url 'video:unsubscribe' pk=tv_show.id %}">
+                                <button class="btn btn-default">Перестать</button></a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+          </div>
+      </div>
+         <div class="box">
+                 <table class="features-table">
+                 <tbody>
+                     <tr>
+                         <td  class="grey">Страна </td>
+                         <td  class="grey">{{ tv_show.country }}</td>
+                     </tr>
+                    <tr>
+                        <td  class="grey">Год </td>
+                        <td class="grey">{{ tv_show.year_of_issue }}</td>
+                    </tr>
+                    <tr>
+                        <td class="grey">Жанр</td>
+                        <td class="grey">{{ tv_show.genre }}</td>
+                    </tr>
+                    <tr>
+                        <td class="grey">Продолжительность</td>
+                        <td class="grey">{{ tv_show.duration }}, минут</td>
+                    </tr>
+                    {% for data in info_web %}
+                        <tr>
+                            <td class="grey">Качество</td>
+                            <td class="grey">{{ data.quality }}</td>
+                        </tr>
+                        <tr>
+                            <td class="grey">Перевод </td>
+                            <td class="grey" nowrap>{{ data.translation }}</td>
+                        </tr>
+                        <tr>
+                            <td class="grey">Смотреть онлайн </td>
+                        <td class="grey" nowrap>{{ data.title }} : <a>{{ data.link_to_watch_online }}</a></td>
+                    {% endfor %}
+                    </tr>
+                     <tr>
+                         <td class="grey">Описание</td>
+                         <td class="grey" nowrap> {{ tv_show.description }}</td>
+                     </tr>
+                 </tbody>
+                 </table>
+             </div>
+
+    {% endfor %}
+</div>
+{% endblock %}
