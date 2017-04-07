@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import get_object_or_404
 
 from siren_proj import models
 from siren_proj.video.forms import SearchForm
@@ -39,7 +38,7 @@ def main(request):
 
 
 def subscribe(request, pk):
-    is_user_subscribe = models.UserSubscription.objects.filter(video_id=pk).first()
+    is_user_subscribe = models.UserSubscription.objects.filter(user_id=request.user.id, video_id=pk).first()
     if is_user_subscribe:
         pass
     else:
@@ -74,4 +73,51 @@ def search(request):
             return render(request, 'video/searching_result.html', {'videos': videos})
 
 
+def filter_serials_foreign(request):
+    videos = models.Video.objects.filter(type=1).exclude(country='Россия').exclude(
+        country='Турция').distinct('name')
+    subscriptions = models.UserSubscription.objects.all()
+    paginator = Paginator(videos, 9)
+    page = request.GET.get('page')
+    try:
+        videos = paginator.page(page)
+    except PageNotAnInteger:
+        videos = paginator.page(1)
+    except EmptyPage:
+        videos = paginator.page(paginator.num_pages)
+
+    return render(request, 'video/main.html', {'videos': videos,
+                                               'subscriptions': subscriptions})
+
+
+def filter_serials_russian(request):
+    videos = models.Video.objects.filter(type=1, country='Россия').distinct('name')
+    subscriptions = models.UserSubscription.objects.all()
+    paginator = Paginator(videos, 9)
+    page = request.GET.get('page')
+    try:
+        videos = paginator.page(page)
+    except PageNotAnInteger:
+        videos = paginator.page(1)
+    except EmptyPage:
+        videos = paginator.page(paginator.num_pages)
+
+    return render(request, 'video/main.html', {'videos': videos,
+                                               'subscriptions': subscriptions})
+
+
+def filter_serials_turkish(request):
+    videos = models.Video.objects.filter(type=1, country='Турция').distinct('name')
+    subscriptions = models.UserSubscription.objects.all()
+    paginator = Paginator(videos, 9)
+    page = request.GET.get('page')
+    try:
+        videos = paginator.page(page)
+    except PageNotAnInteger:
+        videos = paginator.page(1)
+    except EmptyPage:
+        videos = paginator.page(paginator.num_pages)
+
+    return render(request, 'video/main.html', {'videos': videos,
+                                               'subscriptions': subscriptions})
 

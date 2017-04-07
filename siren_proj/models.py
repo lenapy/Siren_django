@@ -39,9 +39,7 @@ class Video(models.Model):
     premiere = models.CharField(max_length=50, null=True, blank=True)
     description = models.TextField()
     photo = models.CharField(max_length=100)
-    type = models.IntegerField(choices=(
-        (1, 'film'),
-        (2, 'tv_sow')))
+    type = models.IntegerField()
     season = models.SmallIntegerField(null=True, blank=True)
     last_episode = models.CharField(max_length=10, null=True, blank=True)
     label = models.CharField(max_length=30, null=True, blank=True)
