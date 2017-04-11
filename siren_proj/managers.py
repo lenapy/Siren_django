@@ -14,6 +14,9 @@ class UserManager(models.Manager):
         user.save()
         return user.pk
 
-    def change_password(self, password):
+    def change_password(self, password, user_id):
         password_hash = make_password(password, hasher='md5')
-        self.update(password=password_hash)
+        user = self.filter(id=user_id)
+        user.update(password=password_hash)
+
+

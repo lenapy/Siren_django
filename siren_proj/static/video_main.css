@@ -1,0 +1,68 @@
+.container
+{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  width: 100%
+}
+
+.box
+{
+ background: #9595ff;
+  color: white;
+  font-size: 60px;
+  text-align: center;
+  line-height: 200px;
+
+  width: 300px;
+  height: 510px;
+  margin-top: 60px;
+  margin-left: 50px;
+  margin-bottom: 40px;
+
+}
+
+
+
+.video_container{
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+}
+.img {
+  height: auto;
+  width: 300px;
+}
+
+.form {
+    height: 34px;
+    margin-bottom: 30px;
+    position: relative;
+
+}
+.btn .btn-default {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.pagination {
+    position: static;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    background: #9595ff;
+    solid-color: #9595ff;
+    border: 0px;
+}
+
+
+.pag-bar{
+    text-align: center;
+    margin-bottom: 30px;
+
+}
+
+
+
+

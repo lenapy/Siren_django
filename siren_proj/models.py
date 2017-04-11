@@ -38,10 +38,10 @@ class Video(models.Model):
     duration = models.IntegerField()
     premiere = models.CharField(max_length=50, null=True, blank=True)
     description = models.TextField()
-    photo = models.ImageField(upload_to='photo/%Y/%m/%d/')
-    type = models.CharField(max_length=30)
+    photo = models.CharField(max_length=100)
+    type = models.IntegerField()
     season = models.SmallIntegerField(null=True, blank=True)
-    last_episode = models.SmallIntegerField(null=True, blank=True)
+    last_episode = models.CharField(max_length=10, null=True, blank=True)
     label = models.CharField(max_length=30, null=True, blank=True)
 
     class Meta:

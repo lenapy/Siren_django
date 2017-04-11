@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 import uuid
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from siren_proj import models
 from siren_proj.user.forms import RegistrationForm, LoginForm, PasswordChangeForm
-from siren_proj.models import User, Session
+from siren_proj.models import User, Session, Video
 
 
 def index(request):
@@ -33,7 +35,7 @@ def login(request):
         form = LoginForm(data=request.POST)
         if form.is_valid():
             session = Session.objects.create(user=form.user, token=uuid.uuid4())
-            response = redirect('/')
+            response = redirect('user:profile')
             response.set_cookie('user-session', session.token,
                                 expires=session.date_expired)
             return response
@@ -56,9 +58,8 @@ def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST)
         if form.is_valid():
-            new_pass = form.cleaned_data
-            print(new_pass)
-            User.objects.change_password(new_pass)
+            new_pass = form.cleaned_data['new_password']
+            User.objects.change_password(new_pass, request.user.id)
             return redirect('user:login')
         else:
             pass
@@ -68,4 +69,17 @@ def change_password(request):
 
 
 def profile(request):
-    return render(request, 'user/profile.html')
+    videos = Video.objects.filter(usersubscription__user_id=request.user.id)
+    paginator = Paginator(videos, 9)
+    page = request.GET.get('page')
+    try:
+        videos = paginator.page(page)
+    except PageNotAnInteger:
+        videos = paginator.page(1)
+    except EmptyPage:
+        videos = paginator.page(paginator.num_pages)
+
+    return render(request, 'user/profile.html', {'videos': videos,
+                                                 })
+
+
