@@ -1,2 +1,1 @@
-python manage.py runserver
-python manage.py migrate
+web: python manage.py runserver
