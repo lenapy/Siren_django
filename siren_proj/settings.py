@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+import dj_database_url
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -91,15 +93,17 @@ WSGI_APPLICATION = 'siren_proj.wsgi.application'
 # }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd4netvbgctluci',
-        'USER': 'dtxqeqmhtszklr',
-        'PASSWORD': '280552c934de4a4ed90013ce65e438d4546bad722fa94fd18e45cbcbc45d9cf5',
-        'HOST': 'ec2-23-23-111-171.compute-1.amazonaws.com',
-        'PORT': '',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'd4netvbgctluci',
+#         'USER': 'dtxqeqmhtszklr',
+#         'PASSWORD': '280552c934de4a4ed90013ce65e438d4546bad722fa94fd18e45cbcbc45d9cf5',
+#         'HOST': 'ec2-23-23-111-171.compute-1.amazonaws.com',
+#         'PORT': '',
     }
 }
-
+# Update database configuration with $DATABASE_URL.
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
