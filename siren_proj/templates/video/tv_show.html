@@ -18,11 +18,12 @@
               </p>
                 <p>
                         <h5>{{ tv_show.name }}</h5>
-                   {% if  tv_show.last_episode == 'Все серии' %}
-                       <h5> {{ tv_show.last_episode }}</h5>
+                   {% if  tv_show.last_episode == 'Все серии'  or tv_show.last_episode == 'все серии'%}
+                       <h5> Все серии </h5>
                    {% else %}
                         <h5> Серия {{tv_show.last_episode }}</h5>
                    {% endif %}
+
                 <div class="form-control">
                      <a href="{% url 'video:add' pk=tv_show.id %}">
                          <button class="btn btn-default">Следить</button></a>
@@ -50,19 +51,25 @@
                         <td class="grey">Жанр</td>
                         <td class="grey">{{ tv_show.genre }}</td>
                     </tr>
-                    <tr>
-                        <td class="grey">Продолжительность</td>
-                        <td class="grey">{{ tv_show.duration }}, минут</td>
-                    </tr>
+                     {% if not tv_show.duration == None %}
+                        <tr>
+                            <td class="grey">Продолжительность</td>
+                            <td class="grey">{{ tv_show.duration }}, минут</td>
+                        </tr>
+                     {% endif  %}
                     {% for data in info_web %}
+                        {% if not data.quality == None %}
                         <tr>
                             <td class="grey">Качество</td>
                             <td class="grey">{{ data.quality }}</td>
                         </tr>
+                        {% endif %}
+                        {% if not data.translation == None %}
                         <tr>
                             <td class="grey">Перевод </td>
                             <td class="grey" nowrap>{{ data.translation }}</td>
                         </tr>
+                        {% endif %}
                         <tr>
                             <td class="grey">Смотреть онлайн </td>
                         <td class="grey" nowrap>{{ data.title }} : <a>{{ data.link_to_watch_online }}</a></td>

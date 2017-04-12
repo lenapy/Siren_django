@@ -33,11 +33,17 @@
                     <a href="{% url 'video:tv_show' pk=video.pk %}" >
                         <h5>{{ video.name }}</h5>
                     </a>
-                   {% if  video.last_episode == 'Все серии' %}
-                       <h5> {{ video.last_episode }}</h5>
+                   {% if  video.last_episode == 'Все серии' or video.last_episode == 'все серии' %}
+                       <h5> Все серии </h5>
                    {% else %}
                         <h5> Серия {{video.last_episode }}</h5>
                    {% endif %}
+                        {% for info in info_web %}
+                            {% if info.video_id == video.id %}
+                        <h5> Дата обновления: {{ info.update_date }}</h5>
+                        <h5>{{ info.title }}</h5>
+                            {% endif %}
+                        {% endfor %}
                 <div class="form-control">
                      <a href="{% url 'video:add' pk=video.id %}">
                          <button class="btn btn-default">Следить</button></a>

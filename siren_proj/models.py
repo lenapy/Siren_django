@@ -34,10 +34,10 @@ class Video(models.Model):
     name = models.CharField(max_length=100)
     year_of_issue = models.IntegerField()
     country = models.CharField(max_length=100)
-    genre = models.CharField(max_length=100)
-    duration = models.IntegerField()
+    genre = models.CharField(max_length=100, null=True, blank=True)
+    duration = models.IntegerField(null=True, blank=True)
     premiere = models.CharField(max_length=50, null=True, blank=True)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     photo = models.CharField(max_length=100)
     type = models.IntegerField()
     season = models.SmallIntegerField(null=True, blank=True)
@@ -67,8 +67,8 @@ class Website(models.Model):
     video = models.ForeignKey(Video, on_delete=models.CASCADE)
     update_date = models.CharField(max_length=50)
     link_to_watch_online = models.URLField()
-    quality = models.CharField(max_length=50)
-    translation = models.CharField(max_length=100)
+    quality = models.CharField(max_length=50, null=True, blank=True)
+    translation = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
         db_table = 'website'

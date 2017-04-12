@@ -1,13 +1,10 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from siren_proj import models
 from siren_proj.video.forms import SearchForm
-
-
-def film_view(request, pk):
-    film = models.Video.objects.filter(id=pk)
-    return render(request, 'video/films.html', {'film': film})
 
 
 def tv_show_view(request, pk):
@@ -20,8 +17,10 @@ def tv_show_view(request, pk):
 
 
 def main(request):
-    videos = models.Video.objects.all().distinct('name')
+    videos = models.Video.objects.all().\
+        order_by('year_of_issue').reverse()
     subscriptions = models.UserSubscription.objects.all()
+    info_web = models.Website.objects.all()
     paginator = Paginator(videos, 9)
     page = request.GET.get('page')
     try:
@@ -34,7 +33,8 @@ def main(request):
         videos = paginator.page(paginator.num_pages)
 
     return render(request, 'video/main.html', {'videos': videos,
-                                               'subscriptions': subscriptions})
+                                               'subscriptions': subscriptions,
+                                               'info_web': info_web})
 
 
 def subscribe(request, pk):
@@ -59,24 +59,21 @@ def unsubscribe(request, pk):
 
 def search(request):
         form = SearchForm(data=request.POST)
+        subscriptions = models.UserSubscription.objects.all()
+        info_web = models.Website.objects.all()
         if form.is_valid():
             video_title = form.cleaned_data['video_title']
             videos = models.Video.objects.filter(name__icontains=video_title)
-            paginator = Paginator(videos, 9)
-            page = request.GET.get('page')
-            try:
-                videos = paginator.page(page)
-            except PageNotAnInteger:
-                videos = paginator.page(1)
-            except EmptyPage:
-                videos = paginator.page(paginator.num_pages)
-            return render(request, 'video/searching_result.html', {'videos': videos})
+            return render(request, 'video/searching_result.html', {'videos': videos,
+                                                                   'subscriptions': subscriptions,
+                                                                   'info_web': info_web})
 
 
 def filter_serials_foreign(request):
     videos = models.Video.objects.filter(type=1).exclude(country='Россия').exclude(
         country='Турция').distinct('name')
     subscriptions = models.UserSubscription.objects.all()
+    info_web = models.Website.objects.all()
     paginator = Paginator(videos, 9)
     page = request.GET.get('page')
     try:
@@ -87,12 +84,14 @@ def filter_serials_foreign(request):
         videos = paginator.page(paginator.num_pages)
 
     return render(request, 'video/main.html', {'videos': videos,
-                                               'subscriptions': subscriptions})
+                                               'subscriptions': subscriptions,
+                                               'info_web': info_web})
 
 
 def filter_serials_russian(request):
     videos = models.Video.objects.filter(type=1, country='Россия').distinct('name')
     subscriptions = models.UserSubscription.objects.all()
+    info_web = models.Website.objects.all()
     paginator = Paginator(videos, 9)
     page = request.GET.get('page')
     try:
@@ -103,12 +102,14 @@ def filter_serials_russian(request):
         videos = paginator.page(paginator.num_pages)
 
     return render(request, 'video/main.html', {'videos': videos,
-                                               'subscriptions': subscriptions})
+                                               'subscriptions': subscriptions,
+                                               'info_web': info_web})
 
 
 def filter_serials_turkish(request):
     videos = models.Video.objects.filter(type=1, country='Турция').distinct('name')
     subscriptions = models.UserSubscription.objects.all()
+    info_web = models.Website.objects.all()
     paginator = Paginator(videos, 9)
     page = request.GET.get('page')
     try:
@@ -119,5 +120,6 @@ def filter_serials_turkish(request):
         videos = paginator.page(paginator.num_pages)
 
     return render(request, 'video/main.html', {'videos': videos,
-                                               'subscriptions': subscriptions})
+                                               'subscriptions': subscriptions,
+                                               'info_web': info_web})
 

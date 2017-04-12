@@ -1,1 +1,72 @@
-{% extends "video/main.html" %}
+{% extends "base.html" %}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+{##}
+{#<link rel="stylesheet" type="text/css" href="../../static/video_main.css">#}
+{#<link rel="stylesheet" type="text/css" href="/siren_proj/static/base.css">#}
+
+{% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/base.css" type="text/css">
+<link rel="stylesheet" href="/static/video_main.css" type="text/css">
+
+
+
+    <div class="container">
+    {%  for video in videos %}
+{#        {% if video.type == 1 %}#}
+      <div class="box">
+          <div class="video_container">
+              <p>
+                <a href="{% url 'video:tv_show' pk=video.pk %}" >
+                    <img src= '{{ video.photo }}' width="300" height="400" alt="{{ video.name }}" />
+                </a>
+              </p>
+                <p>
+                    <a href="{% url 'video:tv_show' pk=video.pk %}" >
+                        <h5>{{ video.name }}</h5>
+                    </a>
+                   {% if  video.last_episode == 'Все серии' or video.last_episode == 'все серии' %}
+                       <h5> Все серии </h5>
+                   {% else %}
+                        <h5> Серия {{video.last_episode }}</h5>
+                   {% endif %}
+                        {% for info in info_web %}
+                            {% if info.video_id == video.id %}
+                        <h5> Дата обновления: {{ info.update_date }}</h5>
+                            {% endif %}
+                        {% endfor %}
+                <div class="form-control">
+                     <a href="{% url 'video:add' pk=video.id %}">
+                         <button class="btn btn-default">Следить</button></a>
+                    {% for subscription in subscriptions %}
+                        {% if subscription.video_id == video.id and subscription.user_id == request.user.id %}
+                            <a href="{% url 'video:unsubscribe' pk=video.id %}">
+                                <button class="btn btn-default">Перестать</button></a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+          </div>
+      </div>
+
+    {% endfor %}
+</div>
+     <div class="pag-bar">
+       <h4> {% if videos.has_previous %}
+            <a href="?page={{ videos.previous_page_number }}">&laquo;</a>
+            {% endif %}
+            Page {{ videos.number }} of {{ videos.paginator.num_pages }}
+            {% if videos.has_next %}
+                <a href="?page={{ videos.next_page_number }}">&raquo;</a>
+            {% endif %}
+        </h4>
+
+    </div>
+{% endblock %}
