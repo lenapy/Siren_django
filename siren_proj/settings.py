@@ -96,7 +96,7 @@ DATABASES = {
         'USER': 'dtxqeqmhtszklr',
         'PASSWORD': '280552c934de4a4ed90013ce65e438d4546bad722fa94fd18e45cbcbc45d9cf5',
         'HOST': 'ec2-23-23-111-171.compute-1.amazonaws.com',
-        'PORT': '5342',
+        'PORT': '',
     }
 }
 
