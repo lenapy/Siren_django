@@ -28,7 +28,7 @@ SECRET_KEY = 'c4i*!95o3*9jib0*c9d1yvj9n=m9o&f0*y9d8h3&&9-5*3h@nx'
 DEBUG = True
 
 ALLOWED_HOSTS = ['siren-lits.herokuapp.com',
-                 ]
+                 '127.0.0.1']
 
 
 # Application definition
