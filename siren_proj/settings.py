@@ -150,5 +150,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'siren_proj/static')
+# STATIC_ROOT = ''
 MEDIA_ROOT = os.path.join(BASE_DIR, 'siren_proj/static/video_images')
 MEDIA_URL = '/video_images/'
+STATICFILES_DIRS = (os.path.join('static'), )
