@@ -18,8 +18,10 @@
            <div class="container">
    {% if not videos %}
                 <div class="no_video">
-               <h5>На данный момент у Вас нет отслеживаемых видео.<br>
-                   Список видео можно посмотреть на вкладке Home</h5>
+                   <h4>На данный момент у Вас нет отслеживаемых видео.<br>
+                       Список видео можно посмотреть на вкладке
+                       <a href="{% url 'video:main' %}">Home</a>
+                   </h4>
                 </div>
    {% else %}
     {%  for video in videos %}
