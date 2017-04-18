@@ -16,8 +16,11 @@
     {% endif %}
 
            <div class="container">
+   {% if not videos %}
+               <h5>На данный момент у Вас нет отслеживаемых видео.<br>
+               Список видео можно посмотреть на вкладке Home</h5>
+   {% else %}
     {%  for video in videos %}
-{#        {% if video.type == 1 %}#}
       <div class="box">
           <div class="video_container">
               <p>
@@ -54,5 +57,5 @@
         </h4>
 
     </div>
-
+{% endif %}
 {% endblock %}
