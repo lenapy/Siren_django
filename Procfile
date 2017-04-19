@@ -1,1 +1,1 @@
-web: python manage.py runserver
+web: gunicorn siren_proj.wsgi --log-file -

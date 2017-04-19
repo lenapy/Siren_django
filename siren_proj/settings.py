@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+import dj_database_url
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +27,8 @@ SECRET_KEY = 'c4i*!95o3*9jib0*c9d1yvj9n=m9o&f0*y9d8h3&&9-5*3h@nx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['siren-lits.herokuapp.com',
+                 '127.0.0.1']
 
 
 # Application definition
@@ -92,14 +95,16 @@ WSGI_APPLICATION = 'siren_proj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd4netvbgctluci',
-        'USER': 'dtxqeqmhtszklr',
-        'PASSWORD': '280552c934de4a4ed90013ce65e438d4546bad722fa94fd18e45cbcbc45d9cf5',
-        'HOST': 'ec2-23-23-111-171.compute-1.amazonaws.com',
+        'NAME': 'sirendb',
+        'USER': 'siren_admin',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
         'PORT': '',
     }
 }
-
+# Update database configuration with $DATABASE_URL.
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -143,7 +148,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'siren_proj/static')
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'siren_proj/static')
+# STATIC_ROOT = ''
 MEDIA_ROOT = os.path.join(BASE_DIR, 'siren_proj/static/video_images')
 MEDIA_URL = '/video_images/'
+
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)

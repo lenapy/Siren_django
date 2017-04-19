@@ -70,6 +70,7 @@ def change_password(request):
 
 def profile(request):
     videos = Video.objects.filter(usersubscription__user_id=request.user.id)
+    info_web = models.Website.objects.all()
     paginator = Paginator(videos, 9)
     page = request.GET.get('page')
     try:
@@ -80,6 +81,6 @@ def profile(request):
         videos = paginator.page(paginator.num_pages)
 
     return render(request, 'user/profile.html', {'videos': videos,
-                                                 })
+                                                 'info_web': info_web})
 
 
