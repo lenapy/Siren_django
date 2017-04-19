@@ -94,12 +94,12 @@ WSGI_APPLICATION = 'siren_proj.wsgi.application'
 # }
 DATABASES = {
     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'd4netvbgctluci',
-#         'USER': 'dtxqeqmhtszklr',
-#         'PASSWORD': '280552c934de4a4ed90013ce65e438d4546bad722fa94fd18e45cbcbc45d9cf5',
-#         'HOST': 'ec2-23-23-111-171.compute-1.amazonaws.com',
-#         'PORT': '',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'sirendb',
+        'USER': 'siren_admin',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 # Update database configuration with $DATABASE_URL.

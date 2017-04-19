@@ -2,17 +2,16 @@
     height: 500px;
     overflow: hidden !important;
     -webkit-overflow-scrolling: touch;
+
 }
 body, html{
      height: 100%;
- 	background-repeat: no-repeat;
- 	background:#8999A8;
- 	font-family: 'Oxygen', sans-serif;
-	    background-size: cover;
+ 	 font-family: 'Oxygen', sans-serif;
+     background-size: cover;
 }
 
 .main{
- 	margin:60px 15px;
+ 	margin:80px 15px;
 }
 
 h1.title {
