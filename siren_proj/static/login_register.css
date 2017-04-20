@@ -110,3 +110,12 @@ span.input-group-addon i {
 	font-size: 11px;
 	text-align: center;
 }
+
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    width: 404px;
+    margin: auto;
+    margin-top: 5px;
+}
