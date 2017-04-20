@@ -25,18 +25,21 @@
                    {% endif %}
 
                 <div class="form-control">
-                     <a href="{% url 'video:add' pk=tv_show.id %}">
-                         <button class="btn btn-default">Следить</button></a>
-                    {% for subscription in subscriptions %}
-                        {% if subscription.user_id == request.user.id and subscription.video_id == tv_show.id %}
-                            <a href="{% url 'video:unsubscribe' pk=tv_show.id %}">
-                                <button class="btn btn-default">Перестать</button></a>
-                        {% endif %}
-                    {% endfor %}
+                        {% if tv_show.id in subscriptions %}
+                         <a href="{% url 'video:unsubscribe' pk=tv_show.id %}">
+                     <button data-video-id="{{ tv_show.id }}" class="btn btn-default">Перестать</button>
+                    </a>
+                    {% else %}
+                         <a href="{% url 'video:add' pk=tv_show.id %}">
+                             <button data-video-id="{{ tv_show.id }}" class="btn btn-default">Следить</button>
+                        </a>
+
+                    {% endif %}
+
                 </div>
           </div>
       </div>
-         <div class="box">
+         <div class="box_table">
                  <table class="features-table">
                  <tbody>
                      <tr>
@@ -85,4 +88,25 @@
 
     {% endfor %}
 </div>
+    <script>
+    $('.box .video_container .form-control button').click(function(e)
+    {
+        e.preventDefault();
+        var el = $(e.target);
+        var video_id = el.attr('data-video-id');
+        var subscribe = el.parent().attr('href');
+        var text_now = el.text();
+        if (text_now == 'Следить' && subscribe == '/video/add/' + video_id + '/'){
+            el.text('Перестать');
+            el.parent().attr('href','/video/unsubscribe/' + video_id);
+        }
+        else {
+            el.text('Следить');
+            el.parent().attr('href','/video/add/' + video_id);
+
+        }
+        $.get(subscribe);
+
+    });
+    </script>
 {% endblock %}

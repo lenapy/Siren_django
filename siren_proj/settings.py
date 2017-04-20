@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'siren_proj',
     'siren_proj.user',
     'siren_proj.video',
+    'siren_proj.templatetags.common',
 ]
 
 MIDDLEWARE = [
@@ -166,3 +167,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
+

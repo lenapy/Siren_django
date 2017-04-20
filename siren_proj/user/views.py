@@ -69,7 +69,7 @@ def change_password(request):
 
 
 def profile(request):
-    videos = Video.objects.filter(usersubscription__user_id=request.user.id)
+    videos = Video.objects.filter(usersubscription__user_id=request.user.id).order_by('year_of_issue').reverse()
     info_web = models.Website.objects.all()
     paginator = Paginator(videos, 9)
     page = request.GET.get('page')
