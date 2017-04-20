@@ -61,8 +61,6 @@ def change_password(request):
             new_pass = form.cleaned_data['new_password']
             User.objects.change_password(new_pass, request.user.id)
             return redirect('user:login')
-        else:
-            pass
     else:
         form = PasswordChangeForm()
     return render(request, 'user/change_password.html', context={'form': form})
