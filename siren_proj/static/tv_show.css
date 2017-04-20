@@ -25,12 +25,16 @@
   box-shadow: 0 0 10px rgb(92, 99, 107);
 }
 
-.box:nth-child(2)
-{
-  flex-grow:2;
-    background: #d6d0ff;
+/*.box:nth-child(2)*/
+/*{*/
+  /*flex-grow:2;*/
+    /*background: #d6d0ff;*/
+/*}*/
+.box_table{
+    margin-top: 60px;
+    margin-left: 15px;
+    box-shadow: 0 0 10px rgb(92, 99, 107);
 }
-
 .video_container{
   width: 100%;
   max-width: 300px;

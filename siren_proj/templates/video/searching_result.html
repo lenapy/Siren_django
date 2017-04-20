@@ -28,18 +28,41 @@
                             {% endif %}
                         {% endfor %}
                 <div class="form-control">
-                     <a href="{% url 'video:add' pk=video.id %}">
-                         <button class="btn btn-default">Следить</button></a>
-                    {% for subscription in subscriptions %}
-                        {% if subscription.video_id == video.id and subscription.user_id == request.user.id %}
-                            <a href="{% url 'video:unsubscribe' pk=video.id %}">
-                                <button class="btn btn-default">Перестать</button></a>
-                        {% endif %}
-                    {% endfor %}
+                        {% if video.id in subscriptions %}
+                         <a href="{% url 'video:unsubscribe' pk=video.id %}">
+                     <button data-video-id="{{ video.id }}" class="btn btn-default">Перестать</button>
+                    </a>
+                    {% else %}
+                         <a href="{% url 'video:add' pk=video.id %}">
+                             <button data-video-id="{{ video.id }}" class="btn btn-default">Следить</button>
+                        </a>
+
+                    {% endif %}
                 </div>
           </div>
       </div>
 
     {% endfor %}
 </div>
+      <script>
+    $('.box .video_container .form-control button').click(function(e)
+    {
+        e.preventDefault();
+        var el = $(e.target);
+        var video_id = el.attr('data-video-id');
+        var subscribe = el.parent().attr('href');
+        var text_now = el.text();
+        if (text_now == "Следить" && subscribe == '/video/add/' + video_id + '/'){
+            el.text("Перестать");
+            el.parent().attr('href','/video/unsubscribe/' + video_id);
+        }
+        else {
+            el.text("Следить");
+            el.parent().attr('href','/video/add/' + video_id);
+
+        }
+        $.get(subscribe);
+
+    });
+    </script>
 {% endblock %}
