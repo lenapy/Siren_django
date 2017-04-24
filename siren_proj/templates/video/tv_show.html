@@ -75,7 +75,7 @@
                         {% endif %}
                         <tr>
                             <td class="grey">Смотреть онлайн </td>
-                        <td class="grey" nowrap>{{ data.title }} : <a>{{ data.link_to_watch_online }}</a></td>
+                        <td class="grey" nowrap>{{ data.title }} : <a target="_blank" href="{{ data.link_to_watch_online }}">{{ data.link_to_watch_online }}</a></td>
                     {% endfor %}
                     </tr>
                      <tr>
