@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from siren_proj import models
 from siren_proj.video.forms import SearchForm
+from siren_proj import settings
 
 
 def get_subscriptions(request):
@@ -84,7 +85,10 @@ def search(request, ):
                                                                    'info_web': info_web,
                                                                    })
     except KeyError:
-        return redirect(referer)
+        if request.get_full_path() in referer:
+            return redirect('video:main')
+        else:
+            return redirect(referer)
 
 
 def filter_serials_foreign(request):

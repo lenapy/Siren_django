@@ -5,6 +5,11 @@
 <link rel="stylesheet" href="/static/video_main.css" type="text/css">
 
     <div class="container">
+    {% if not videos %}
+        <div class="no_video">
+            По данному запросу ничего не найдено.
+        <div>
+    {% else %}
     {%  for video in videos %}
       <div class="box">
           <div class="video_container">
@@ -44,6 +49,7 @@
 
     {% endfor %}
 </div>
+    {% endif %}
       <script>
     $('.box .video_container .form-control button').click(function(e)
     {
