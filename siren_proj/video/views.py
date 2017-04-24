@@ -71,16 +71,20 @@ def unsubscribe(request, pk):
 
 
 def search(request, ):
+    referer = request.META.get('HTTP_REFERER')
     form = SearchForm(data=request.POST)
     subscriptions = models.UserSubscription.objects.filter(user_id=request.user.id)
     info_web = models.Website.objects.all()
-    if form.is_valid():
-        title = form.cleaned_data['video_title']
-        videos = models.Video.objects.filter(name__icontains=title).order_by('year_of_issue').reverse()
-        return render(request, 'video/searching_result.html', {'videos': videos,
-                                                               'subscriptions': subscriptions,
-                                                               'info_web': info_web,
-                                                               })
+    try:
+        if form.is_valid():
+            title = form.cleaned_data['video_title']
+            videos = models.Video.objects.filter(name__icontains=title).order_by('year_of_issue').reverse()
+            return render(request, 'video/searching_result.html', {'videos': videos,
+                                                                   'subscriptions': subscriptions,
+                                                                   'info_web': info_web,
+                                                                   })
+    except KeyError:
+        return redirect(referer)
 
 
 def filter_serials_foreign(request):
